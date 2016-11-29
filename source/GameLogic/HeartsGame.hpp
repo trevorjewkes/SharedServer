@@ -7,7 +7,7 @@
 
 class HeartsGame : public Game
 {
-public://10 functions
+public: // 10 functions
   HeartsGame(std::vector<std::shared_ptr<Player>>& players);
   ~HeartsGame();
   void play_Hearts();
@@ -17,24 +17,23 @@ public://10 functions
   void passCards(int round);
   int endTurn(int currentPlayer);
   void endRound();
-  bool setPassCards(std::vector<Card> cards, std::string name);
-  int playCard(Card card, std::string name);
+  bool setPassCards(std::vector<Card> cards, int id);
+  int playCard(Card card, int id);
   std::vector<std::shared_ptr<Player>> getPlayers() { return players; }
   std::vector<Card> getCenterPile() { return centerPile; }
-private:
+private: // 6 functions
   std::vector<Card> initializeDeck();
   void dealCards(std::vector<Card>& Deck);
-
+  std::vector<std::shared_ptr<Player>> players;
   // checks to see if a players hand is all hearts.
   bool allhearts(std::vector<Card> h);
   // compares hand against the lead suit
   bool noLeadSuit(Suit s, std::vector<Card> h);
   bool validateMove(int index, Card move);
-  std::vector<std::shared_ptr<Player>> players;
   std::vector<Card> centerPile;
 
   bool brokenHearts = false;
-  bool validatePass(std::vector<Card> cards, std::string name);
+  bool validatePass(std::vector<Card> cards, int id);
   int turn = 0;
   int numTrick = 0;
   std::vector<std::vector<Card>> cardsToPass;
