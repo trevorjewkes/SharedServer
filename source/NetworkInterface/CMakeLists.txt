@@ -1,4 +1,4 @@
-xpGetExtern(externIncs externLibs PUBLIC boost wxWidgets)
+xpGetExtern(externIncs externLibs PUBLIC boost)
 include_directories(${externIncs} ${CMAKE_SOURCE_DIR})
 add_library(NetworkInterface
 ClientNetworkInterface.cpp
@@ -13,3 +13,6 @@ ServerNetworkInterface.hpp
 TCPConnection.cpp
 TCPConnection.hpp
 )
+link_libraries(NetworkInterface ${externLibs})
+add_executable(mockClient
+mockClient.cpp)

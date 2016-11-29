@@ -1,14 +1,14 @@
 #ifndef HEARTS_GAME_HPP
 #define HEARTS_GAME_HPP
 
-#include "source\PlayerAPI\Player.hpp"
+#include "source/PlayerAPI/Game.hpp"
 #include <boost/asio.hpp>
 #include <random>
 
-class HeartsGame
+class HeartsGame : public Game
 {
 public://10 functions
-  HeartsGame(std::vector<Player>& players);
+  HeartsGame(std::vector<std::shared_ptr<Player>>& players);
   ~HeartsGame();
   void play_Hearts();
   // looks through each hand to find the 2 of clubs
@@ -19,9 +19,9 @@ public://10 functions
   void endRound();
   bool setPassCards(std::vector<Card> cards, std::string name);
   int playCard(Card card, std::string name);
-  std::vector<Player> getPlayers() { return players; }
+  std::vector<std::shared_ptr<Player>> getPlayers() { return players; }
   std::vector<Card> getCenterPile() { return centerPile; }
-private: //6 functions
+private:
   std::vector<Card> initializeDeck();
   void dealCards(std::vector<Card>& Deck);
 
@@ -29,15 +29,18 @@ private: //6 functions
   bool allhearts(std::vector<Card> h);
   // compares hand against the lead suit
   bool noLeadSuit(Suit s, std::vector<Card> h);
-  bool validateMove(int index, Card move, int t, int i);
-  std::vector<Player> players;
+  bool validateMove(int index, Card move);
+  std::vector<std::shared_ptr<Player>> players;
   std::vector<Card> centerPile;
 
   bool brokenHearts = false;
-
+  bool validatePass(std::vector<Card> cards, std::string name);
   int turn = 0;
+  int numTrick = 0;
   std::vector<std::vector<Card>> cardsToPass;
   void passCard(Card tmp, int i);
+  bool gameOver = false;
+  bool roundOver = false;
 };
 
 #endif // HEARTS_GAME_HPP
