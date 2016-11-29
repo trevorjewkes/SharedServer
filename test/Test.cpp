@@ -82,3 +82,31 @@ BOOST_AUTO_TEST_CASE(SerializeCard)
   BOOST_CHECK_EQUAL(deserializeCard.getSuit(), CLUBS);
   BOOST_CHECK_EQUAL(deserializeCard.getValue(), ACE);
 }
+
+BOOST_AUTO_TEST_CASE(heartsGameInitialization)
+{
+    std::vector<Player> players;
+    for (int i = 0; i < players.size(); i++)
+    {
+        Player newPlayer(i,"123.123.123." + std::to_string(i));
+        players.push_back(newPlayer);
+    }
+    HeartsGame game(players);
+    BOOST_CHECK_EQUAL(game.getPlayers().size(), 4);
+    for (int i = 0; i < players.size(); ++i)
+        BOOST_CHECK_EQUAL(game.getPlayers().at(i).getId(), i);
+    BOOST_CHECK_EQUAL(game.getCenterPile().size(), 0);
+    game.play_Hearts();
+    for (int i = 0; i < players.size(); i++)
+        BOOST_CHECK_EQUAL(game.getPlayers().at(i).getHand().size(), 13);
+    Card twoOfClubs(CLUBS, TWO);
+    int playerWithTwoOfClubs = -1;
+    for (int i = 0; i < players.size(); i++)
+    {
+        for (int j = 0; j < game.getPlayers().at(j).getHand().size(); j++)
+        {
+            if (game.getPlayers().at(i).getHand()[j] == twoOfClubs) playerWithTwoOfClubs = i;
+        }
+    }
+    BOOST_CHECK_EQUAL(game.findTwoOfClubs(), playerWithTwoOfClubs);
+}
