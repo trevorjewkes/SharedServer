@@ -132,3 +132,23 @@ BOOST_AUTO_TEST_CASE(heartsGameInitialization)
     }
     BOOST_CHECK_EQUAL(game.findTwoOfClubs(), playerWithTwoOfClubs);
 }
+
+BOOST_AUTO_TEST_CASE(heartsGameSetPassCards){
+    Card aceofSpades = Card(SPADES, ACE);
+    Card threeOfHearts(HEARTS, THREE);
+    Card kingOfClubs(CLUBS, KING);
+    std::vector<Player> players;
+    
+    for (int i = 0; i < players.size(); i++){
+        Player newPlayer(i,"123.123.123." + std::to_string(i));
+        players.push_back(newPlayer);
+    }
+    std::vector<Card> v;
+    v.push_back(aceofSpades);
+    v.push_back(threeOfHearts);
+    v.push_back(kingOfClubs);
+    HeartsGame game(players);
+    
+    BOOST_CHECK(game.setPassCards(v, "123.123.123"+std::to_string(0)) == true);//tests player with name passes cards correctly
+    BOOST_CHECK(game.setPassCards(v, "abc") == true);//tests to make sure unauthorized player can't pass cards
+}
