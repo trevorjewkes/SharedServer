@@ -360,17 +360,16 @@ bool HeartsGame::setPassCards(std::vector<Card> cards, int id)
 // that made the move
 int HeartsGame::playCard(Card card, int id)
 {
-  int j = 0;
+  int j = -1;
   for (int i = 0; i < players.size(); i++)
   {
     if (players[i]->getId() == id)
     {
       if (!validateMove(i, card))
       {
-        return -1;
+        return j;
+        if (!players[i]->removeCardFromHand(card)) return -1;
       }
-
-      if (!players[i]->removeCardFromHand(card)) return -1;
       centerPile.push_back(card);
       j = (i + 1) % 4;
     }
