@@ -17,14 +17,21 @@
 
 // Constructor for the Player class. Takes in the IP address of the client.
 Player::Player(int id, TCPConnection::pointer connection)
-  : id(id), connection(connection),
-  roundScore(0), bid(0), bags(0), tricksWon(0), name("Guest")
+  : id(id),
+    connection(connection),
+    roundScore(0),
+    bid(0),
+    bags(0),
+    tricksWon(0),
+    name("Guest")
 {
   std::stringstream ss;
-  try {
+  try
+  {
     ss << connection->getSocket().remote_endpoint();
   }
-  catch (...) {
+  catch (...)
+  {
     ss << "0.0.0.0:0";
   }
   ip = ss.str();
@@ -71,7 +78,6 @@ void Player::startNewGame()
   bags = 0;
   tricksWon = 0;
 }
-
 
 // Initializes a players hand with the 'numCards' specified.
 // The deck must be passed in so that the cards can be removed from the deck
@@ -215,8 +221,7 @@ void Player::setValidateBid(std::function<void(int)> func)
   validateBid = func;
 }
 
-void Player::setProcLobbyCommand(
-  std::function<void(std::string,int)> func)
+void Player::setProcLobbyCommand(std::function<void(std::string, int)> func)
 {
   procLobbyCommand = func;
 }
@@ -259,7 +264,7 @@ void Player::requestSuit()
 void Player::updateGameStatus()
 {
   connection->write("Status Update");
-  connection->write(""/*List of cards and players*/);
+  connection->write("" /*List of cards and players*/);
 }
 
 void Player::readLobbyMessage()
@@ -269,7 +274,7 @@ void Player::readLobbyMessage()
 
 void Player::readMessage()
 {
-  connection->aSyncRead(boost::bind(&Player::recivedMessage,this,_1));
+  connection->aSyncRead(boost::bind(&Player::recivedMessage, this, _1));
 }
 
 void Player::receivedMove(std::string msg)
@@ -284,7 +289,8 @@ void Player::receivedMove(std::string msg)
 
 void Player::receivedBid(std::string msg)
 {
-  // We assume that no other information other than the bid as parsable number from a 
+  // We assume that no other information other than the bid as parsable number
+  // from a
   // string is given.
   try
   {
@@ -309,7 +315,7 @@ void Player::receivedSuit(std::string msg)
 
 void Player::recievedLobbyMessage(std::string msg)
 {
-  procLobbyCommand(msg,id);
+  procLobbyCommand(msg, id);
 }
 
 void Player::recivedMessage(std::string msg)
@@ -319,4 +325,3 @@ void Player::recivedMessage(std::string msg)
   connection->write("Got Messaage : " + msg);
   readMessage();
 }
-

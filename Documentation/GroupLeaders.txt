@@ -1,36 +1,60 @@
-Assignment: Lobby
-	Project Manager: Kyle Myers
-	Github: droidkfx
-	Other Members: Chance G, Alex C, Chit Moe
+Assignment
+  : Lobby Project Manager
+    : Kyle Myers Github
+      : droidkfx Other Members
+        : Chance G,
+          Alex C,
+          Chit Moe
 
-Assignment: Hearts Game Logic
-	Project Manager: Trevor Jewkes
-	Github: tjewkes
-	Other Members: Joe C, Ryan F, Nieka G, Brandon S
+            Assignment
+          : Hearts Game Logic Project Manager
+            : Trevor Jewkes Github
+              : tjewkes Other Members
+                : Joe C,
+                  Ryan F,
+                  Nieka G,
+                  Brandon S
 
-Assignment: Crazy Eights Logic
-	Project Manager: Shem Hale
-	Github: Shemarama
-	Other Members: Ryan C, Cameron C, Nick S
+                    Assignment
+                  : Crazy Eights Logic Project Manager
+                    : Shem Hale Github
+                      : Shemarama Other Members
+                        : Ryan C,
+                          Cameron C,
+                          Nick S
 
-Assignment: Player API
-	Project Manager: Katie Sweet
-	Github: katiesweet
-	Other Members: Ligia F, Haley C, Madeline C
+                            Assignment
+                          : Player API Project Manager
+                            : Katie Sweet Github
+                              : katiesweet Other Members
+                                : Ligia F,
+                                  Haley C,
+                                  Madeline C
 
-Assignment: Unknown
-	Project Manager: Adam Tew
-	Github: Unknown
-	Other Members: Matt W, Dave B, Scott H
+                                    Assignment
+                                  : Unknown Project Manager
+                                    : Adam Tew Github
+                                      : Unknown Other Members
+                                        : Matt W,
+                                          Dave B,
+                                          Scott H
 
-Assignment: Networking/Communication
-	Project Manager: Michael Kamerath
-	Github: michaelkamerath
-	Other Members: Parker P, Nic B, David H
+                                              Assignment
+                                            : Networking /
+                                              Communication Project Manager
+                                              : Michael Kamerath Github
+                                                : michaelkamerath Other Members
+                                                  : Parker P,
+                                          Nic B,
+                                          David H
 
-Assignment: Coordination
-	Project Manager: Chris Merrill
-	Github: C-Merrill
-	Other Members: Dustin G, Dakota R, Chase B
+                                              Assignment
+                                            : Coordination Project Manager
+                                              : Chris Merrill Github
+                                                : C -
+                                                  Merrill Other Members
+                                                  : Dustin G,
+                                          Dakota R,
+                                          Chase B
 
-Hello
+                                            Hello

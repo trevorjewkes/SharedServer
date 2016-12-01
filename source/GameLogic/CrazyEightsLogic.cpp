@@ -1,7 +1,8 @@
 #include "CrazyEightsLogic.hpp"
 #include <iostream>
 
-CrazyEightsLogic::CrazyEightsLogic(std::vector<std::shared_ptr<Player>>& netPlayers)
+CrazyEightsLogic::CrazyEightsLogic(
+  std::vector<std::shared_ptr<Player>>& netPlayers)
 {
   players = netPlayers;
   //    for (auto && player: players){
@@ -280,7 +281,8 @@ int CrazyEightsLogic::getNumCardsDrawnCounter()
   return cardsDrawnCounter;
 }
 
-int CrazyEightsLogic::calculateScore(std::vector<std::shared_ptr<Player>> players)
+int CrazyEightsLogic::calculateScore(
+  std::vector<std::shared_ptr<Player>> players)
 {
   int totalScore = 0;
   std::vector<Card> playerHand;
