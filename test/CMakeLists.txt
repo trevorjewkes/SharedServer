@@ -1,4 +1,4 @@
-xpGetExtern(externIncs externLibs PUBLIC boost wxWidgets)
+xpGetExtern(externIncs externLibs PUBLIC boost)
 include_directories(
 $TEST_SOURCE_DIR
 ${externIncs}
@@ -7,5 +7,7 @@ add_executable(Test Test.cpp)
 target_link_libraries(
 Test
 Game
-Hearts
+NetworkInterface
+GameLogic
+${externLibs}
 )
