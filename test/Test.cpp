@@ -5,18 +5,26 @@
 #define BOOST_TEST_MODULE const string test;
 
 // Project Includes
+#include "../source/GameLogic/SpadesLogic.hpp"
 #include "../source/PlayerAPI/Card.hpp"
 #include "../source/PlayerAPI/Player.hpp"
+#include "source/Lobby.hpp"
+#include "source/NetworkInterface/ClientNetworkInterface.hpp"
+#include "source/NetworkInterface/ServerNetworkInterface.hpp"
+#include "source/PlayerAPI/Card.hpp"
+#include "source/PlayerAPI/Player.hpp"
 
 // Standard Includes
+#include <fstream>
 #include <sstream>
+#include <vector>
 
 // Boost Includes
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#include <boost/asio/io_service.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/test/unit_test.hpp>
-#include <boost\asio\io_service.hpp>
 
 BOOST_AUTO_TEST_CASE(startNewRound)
 {
@@ -83,6 +91,7 @@ BOOST_AUTO_TEST_CASE(SerializeCard)
   BOOST_CHECK_EQUAL(deserializeCard.getValue(), ACE);
 }
 
+<<<<<<< HEAD
 BOOST_AUTO_TEST_CASE(heartsGamefindTwoOfClubs)
 {
 
@@ -105,18 +114,58 @@ BOOST_AUTO_TEST_CASE(heartsGamefindTwoOfClubs)
     }
   }
   BOOST_CHECK_EQUAL(game.findTwoOfClubs(), playerWithTwoOfClubs);
+=======
+BOOST_AUTO_TEST_CASE(Login)
+{
+  boost::asio::io_service service;
+  boost::asio::io_service clientService;
+  Lobby lobby2 = Lobby();
+  ClientNetworkInterface* NI =
+    new ClientNetworkInterface(5555, clientService, std::cout);
+  ServerNetworkInterface NI1(
+    12000, service, std::cout, boost::bind(&Lobby::addPlayer, lobby2, _1));
+  NI1.startAccepting();
+  std::ofstream fout;
+  fout.open("database.txt");
+  fout << "USERS" << std::endl;
+  fout << "testuser" << std::endl;
+  fout << "testpassword" << std::endl;
+  fout.close();
+  Lobby lobby = Lobby();
+  std::shared_ptr<Player> player(new Player(1, TCPConnection::create(service)));
+  player->setName("testuser");
+  NI->connect("127.0.0.1", 12000);
+  std::shared_ptr<Player> player2(
+    new Player(2, TCPConnection::create(service)));
+  lobby.procLogin(player2, "LOGIN testuser testpassword");
+  BOOST_CHECK_EQUAL(player->getName(), player2->getName());
+}
+
+BOOST_AUTO_TEST_CASE(SpadesGetNextPlayer)
+{
+  Spades s;
+  for (int i = 0; i < 4; i++)
+  {
+    BOOST_CHECK_EQUAL(s.getNextPlayer(i), ((i + 1) % 4));
+  }
+>>>>>>> d1d52d7667ec933e66f961ff2b2d3d783296bbf7
 }
 
 BOOST_AUTO_TEST_CASE(heartsGameInitialization)
 {
   std::vector<Player> players;
+<<<<<<< HEAD
   for (int i = 0; i < players.size(); i++)
+=======
+  for (int i = 0; i < 4; i++)
+>>>>>>> d1d52d7667ec933e66f961ff2b2d3d783296bbf7
   {
     Player newPlayer(i, "123.123.123." + std::to_string(i));
     players.push_back(newPlayer);
   }
   HeartsGame game(players);
   BOOST_CHECK_EQUAL(game.getPlayers().size(), 4);
+<<<<<<< HEAD
   for (int i = 0; i < players.size(); ++i)
     BOOST_CHECK_EQUAL(game.getPlayers().at(i).getId(), i);
   BOOST_CHECK_EQUAL(game.getCenterPile().size(), 0);
@@ -130,12 +179,45 @@ BOOST_AUTO_TEST_CASE(heartsGameInitialization)
     for (int j = 0; j < game.getPlayers().at(j).getHand().size(); j++)
     {
       if (game.getPlayers().at(i).getHand()[j] == twoOfClubs)
+=======
+  for (int i = 0; i < 4; i++)
+    BOOST_CHECK_EQUAL(game.getPlayers()[i].getId(), i);
+  BOOST_CHECK_EQUAL(game.getCenterPile().size(), 0);
+  game.play_Hearts();
+  for (int i = 0; i < 4; i++)
+    BOOST_CHECK_EQUAL(game.getPlayers()[i].getHand().size(), 13);
+  Card twoOfClubs(CLUBS, TWO);
+  int playerWithTwoOfClubs = -1;
+  for (int i = 0; i < 4; i++)
+  {
+    for (int j = 0; j < game.getPlayers()[i].getHand().size(); j++)
+    {
+      if (game.getPlayers()[i].getHand()[j] == twoOfClubs)
+>>>>>>> d1d52d7667ec933e66f961ff2b2d3d783296bbf7
         playerWithTwoOfClubs = i;
     }
   }
   BOOST_CHECK_EQUAL(game.findTwoOfClubs(), playerWithTwoOfClubs);
 }
 
+<<<<<<< HEAD
+=======
+BOOST_AUTO_TEST_CASE(heartsGamefindTwoOfClubs)
+{
+  std::vector<Player> players;
+  for (int i = 0; i < players.size(); i++)
+  {
+    Player newPlayer(i, "123.123.123." + std::to_string(i));
+    players.push_back(newPlayer);
+  }
+  HeartsGame game(players);
+  game.play_Hearts();
+  Card twoOfClubs(CLUBS, TWO);
+  players.at(1).insertCardToHand(twoOfClubs);
+  BOOST_CHECK(game.findTwoOfClubs() == 1);
+}
+
+>>>>>>> d1d52d7667ec933e66f961ff2b2d3d783296bbf7
 BOOST_AUTO_TEST_CASE(heartsGameSetPassCards)
 {
   Card aceofSpades = Card(SPADES, ACE);
@@ -155,7 +237,30 @@ BOOST_AUTO_TEST_CASE(heartsGameSetPassCards)
   HeartsGame game(players);
 
   BOOST_CHECK(game.setPassCards(v, "123.123.123" + std::to_string(0)) ==
+<<<<<<< HEAD
               true); // tests player with name passes cards correctly
   BOOST_CHECK(game.setPassCards(v, "abc") ==
               true); // tests to make sure unauthorized player can't pass cards
+=======
+              true); // tests player with name
+  BOOST_CHECK(game.setPassCards(v, "abc") ==
+              true); // tests to make sure unauthorized player can't pass cards
+}
+
+BOOST_AUTO_TEST_CASE(heartsGamePlayCard)
+{
+  std::vector<Player> players;
+  for (int i = 0; i < players.size(); i++)
+  {
+    Player newPlayer(i, "123.123.123." + std::to_string(i));
+    players.push_back(newPlayer);
+  } // no for each loop, iterating ints, not players objects
+  HeartsGame game(players);
+  Card twoOfClubs(CLUBS, TWO);
+  game.play_Hearts();
+
+  int j = -1;
+
+  BOOST_CHECK(game.playCard(twoOfClubs, "0") == 0);
+>>>>>>> d1d52d7667ec933e66f961ff2b2d3d783296bbf7
 }
