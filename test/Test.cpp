@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(startNewGame)
   BOOST_CHECK_EQUAL(player.getBid(), 0);
   BOOST_CHECK_EQUAL(player.getBags(), 0);
   BOOST_CHECK_EQUAL(player.getTricksWon(), 0);
-  BOOST_CHECK_EQUAL(player.getOverallScores().empty() , 1);
+  BOOST_CHECK_EQUAL(player.getOverallScores().empty(), 1);
 }
 
 BOOST_AUTO_TEST_CASE(insertCardToHand)
@@ -83,72 +83,79 @@ BOOST_AUTO_TEST_CASE(SerializeCard)
   BOOST_CHECK_EQUAL(deserializeCard.getValue(), ACE);
 }
 
-BOOST_AUTO_TEST_CASE(heartsGamefindTwoOfClubs){
-    
-    std::vector<Player> players;
-    for (int i = 0; i < players.size(); i++){
-        Player newPlayer(i,"123.123.123." + std::to_string(i));
-        players.push_back(newPlayer);
-    }
-    HeartsGame game(players);
-    game.play_Hearts();
-    Card twoOfClubs(CLUBS, TWO);
-    int playerWithTwoOfClubs = -1;
-    for (int i = 0; i < players.size(); i++)
+BOOST_AUTO_TEST_CASE(heartsGamefindTwoOfClubs)
+{
+
+  std::vector<Player> players;
+  for (int i = 0; i < players.size(); i++)
+  {
+    Player newPlayer(i, "123.123.123." + std::to_string(i));
+    players.push_back(newPlayer);
+  }
+  HeartsGame game(players);
+  game.play_Hearts();
+  Card twoOfClubs(CLUBS, TWO);
+  int playerWithTwoOfClubs = -1;
+  for (int i = 0; i < players.size(); i++)
+  {
+    for (int j = 0; j < game.getPlayers().at(j).getHand().size(); j++)
     {
-        for (int j = 0; j < game.getPlayers().at(j).getHand().size(); j++)
-        {
-            if (game.getPlayers().at(i).getHand()[j] == twoOfClubs)
-                playerWithTwoOfClubs = i;
-        }
+      if (game.getPlayers().at(i).getHand()[j] == twoOfClubs)
+        playerWithTwoOfClubs = i;
     }
-    BOOST_CHECK_EQUAL(game.findTwoOfClubs(), playerWithTwoOfClubs);
+  }
+  BOOST_CHECK_EQUAL(game.findTwoOfClubs(), playerWithTwoOfClubs);
 }
 
 BOOST_AUTO_TEST_CASE(heartsGameInitialization)
 {
-    std::vector<Player> players;
-    for (int i = 0; i < players.size(); i++)
+  std::vector<Player> players;
+  for (int i = 0; i < players.size(); i++)
+  {
+    Player newPlayer(i, "123.123.123." + std::to_string(i));
+    players.push_back(newPlayer);
+  }
+  HeartsGame game(players);
+  BOOST_CHECK_EQUAL(game.getPlayers().size(), 4);
+  for (int i = 0; i < players.size(); ++i)
+    BOOST_CHECK_EQUAL(game.getPlayers().at(i).getId(), i);
+  BOOST_CHECK_EQUAL(game.getCenterPile().size(), 0);
+  game.play_Hearts();
+  for (int i = 0; i < players.size(); i++)
+    BOOST_CHECK_EQUAL(game.getPlayers().at(i).getHand().size(), 13);
+  Card twoOfClubs(CLUBS, TWO);
+  int playerWithTwoOfClubs = -1;
+  for (int i = 0; i < players.size(); i++)
+  {
+    for (int j = 0; j < game.getPlayers().at(j).getHand().size(); j++)
     {
-        Player newPlayer(i,"123.123.123." + std::to_string(i));
-        players.push_back(newPlayer);
+      if (game.getPlayers().at(i).getHand()[j] == twoOfClubs)
+        playerWithTwoOfClubs = i;
     }
-    HeartsGame game(players);
-    BOOST_CHECK_EQUAL(game.getPlayers().size(), 4);
-    for (int i = 0; i < players.size(); ++i)
-        BOOST_CHECK_EQUAL(game.getPlayers().at(i).getId(), i);
-    BOOST_CHECK_EQUAL(game.getCenterPile().size(), 0);
-    game.play_Hearts();
-    for (int i = 0; i < players.size(); i++)
-        BOOST_CHECK_EQUAL(game.getPlayers().at(i).getHand().size(), 13);
-    Card twoOfClubs(CLUBS, TWO);
-    int playerWithTwoOfClubs = -1;
-    for (int i = 0; i < players.size(); i++)
-    {
-        for (int j = 0; j < game.getPlayers().at(j).getHand().size(); j++)
-        {
-            if (game.getPlayers().at(i).getHand()[j] == twoOfClubs) playerWithTwoOfClubs = i;
-        }
-    }
-    BOOST_CHECK_EQUAL(game.findTwoOfClubs(), playerWithTwoOfClubs);
+  }
+  BOOST_CHECK_EQUAL(game.findTwoOfClubs(), playerWithTwoOfClubs);
 }
 
-BOOST_AUTO_TEST_CASE(heartsGameSetPassCards){
-    Card aceofSpades = Card(SPADES, ACE);
-    Card threeOfHearts(HEARTS, THREE);
-    Card kingOfClubs(CLUBS, KING);
-    std::vector<Player> players;
-    
-    for (int i = 0; i < players.size(); i++){
-        Player newPlayer(i,"123.123.123." + std::to_string(i));
-        players.push_back(newPlayer);
-    }
-    std::vector<Card> v;
-    v.push_back(aceofSpades);
-    v.push_back(threeOfHearts);
-    v.push_back(kingOfClubs);
-    HeartsGame game(players);
-    
-    BOOST_CHECK(game.setPassCards(v, "123.123.123"+std::to_string(0)) == true);//tests player with name passes cards correctly
-    BOOST_CHECK(game.setPassCards(v, "abc") == true);//tests to make sure unauthorized player can't pass cards
+BOOST_AUTO_TEST_CASE(heartsGameSetPassCards)
+{
+  Card aceofSpades = Card(SPADES, ACE);
+  Card threeOfHearts(HEARTS, THREE);
+  Card kingOfClubs(CLUBS, KING);
+  std::vector<Player> players;
+
+  for (int i = 0; i < players.size(); i++)
+  {
+    Player newPlayer(i, "123.123.123." + std::to_string(i));
+    players.push_back(newPlayer);
+  }
+  std::vector<Card> v;
+  v.push_back(aceofSpades);
+  v.push_back(threeOfHearts);
+  v.push_back(kingOfClubs);
+  HeartsGame game(players);
+
+  BOOST_CHECK(game.setPassCards(v, "123.123.123" + std::to_string(0)) ==
+              true); // tests player with name passes cards correctly
+  BOOST_CHECK(game.setPassCards(v, "abc") ==
+              true); // tests to make sure unauthorized player can't pass cards
 }
