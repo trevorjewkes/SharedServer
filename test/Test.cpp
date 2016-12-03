@@ -188,8 +188,10 @@ BOOST_AUTO_TEST_CASE(heartsGameSetPassCards)
   v.push_back(kingOfClubs);
   HeartsGame game(players);
 
-  BOOST_CHECK(game.setPassCards(v, "123.123.123" + std::to_string(0)) == true); // tests player with name
-  BOOST_CHECK(game.setPassCards(v, "abc") == true); // tests to make sure unauthorized player can't pass cards
+  BOOST_CHECK(game.setPassCards(v, "123.123.123" + std::to_string(0)) ==
+              true); // tests player with name
+  BOOST_CHECK(game.setPassCards(v, "abc") ==
+              true); // tests to make sure unauthorized player can't pass cards
 }
 
 BOOST_AUTO_TEST_CASE(heartsGamePlayCard)
