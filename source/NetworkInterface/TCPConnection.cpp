@@ -76,13 +76,20 @@ void TCPConnection::aSyncRead(std::function<void(std::string)> callback)
 
 void TCPConnection::write(std::string msg)
 {
-  try
+  if (connected)
   {
-    boost::asio::write(socket, boost::asio::buffer(msg + "\n"));
+    try
+    {
+      boost::asio::write(socket, boost::asio::buffer(msg + "\n"));
+    }
+    catch (std::exception& e)
+    {
+      std::cerr << "Exception: " << e.what() << std::endl;
+    }
   }
-  catch (std::exception& e)
+  else
   {
-    std::cerr << "Exception: " << e.what() << std::endl;
+    std::cout << "Not connected. Message was: " << msg << "\n";
   }
 }
 

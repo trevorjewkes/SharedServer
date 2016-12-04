@@ -33,7 +33,7 @@ protected:
   ~NetworkInterface()
   {
     active = false;
-    if (ioThread.joinable()) ioThread.join();
+    if(ioThread.joinable()) ioThread.join();
   }
   // A loop called to continuously proccess the io service
   void ioLoop();

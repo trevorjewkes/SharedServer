@@ -1,8 +1,8 @@
 #ifndef GENERAL_MESSAGE
 #define GENERAL_MESSAGE
 
-#include <sstream>
-#include <string>
+#include<string>
+#include<sstream>
 
 class GeneralMessage
 {
@@ -16,6 +16,7 @@ public:
   GeneralMessage decode(std::string msg);
 
 private:
+
 };
 
 #endif // !GENERAL_MESSAGE

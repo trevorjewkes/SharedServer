@@ -211,6 +211,11 @@ void Player::setValidateSuit(std::function<void(Suit)> func)
   validateSuit = func;
 }
 
+void Player::setValidatePass(std::function<void(Card)> func)
+{
+  validatePass = func;
+}
+
 void Player::setValidateMove(std::function<void(Card)> func)
 {
   validateMove = func;
@@ -249,6 +254,12 @@ void Player::requestMove()
   connection->aSyncRead(boost::bind(&Player::receivedMove, this, _1));
 }
 
+void Player::requestPass()
+{
+  connection->write("Give Pass");
+  connection->aSyncRead(boost::bind(&Player::receivedPass, this, _1));
+}
+
 void Player::requestBid()
 {
   connection->write("Give Bid");
@@ -285,6 +296,16 @@ void Player::receivedMove(std::string msg)
   coded >> decoded;
 
   validateMove(decoded);
+}
+
+void Player::receivedPass(std::string msg)
+{
+  std::stringstream message(msg);
+  boost::archive::text_iarchive coded(message);
+  Card decoded;
+  coded >> decoded;
+
+  validatePass(decoded);
 }
 
 void Player::receivedBid(std::string msg)

@@ -6,13 +6,12 @@
 using namespace boost::asio;
 
 /* This is the NI that should be used by clients */
-class ClientNetworkInterface : NetworkInterface
+class ClientNetworkInterface
+  : NetworkInterface
 {
 public:
   // constructor
-  ClientNetworkInterface(int port,
-                         io_service& service,
-                         std::ostream& outStream);
+  ClientNetworkInterface(int port, io_service& service, std::ostream& outStream);
 
   // method to attempt to connect to the given ip and port, check isConnected to
   // verify connection before proceding with send or recieve.
@@ -28,6 +27,7 @@ public:
 private:
   // The TCP connection to be used by the NI for communication
   TCPConnection::pointer conn;
+
 };
 
 #endif // !CLIENT_NETWORK_INTERFACE

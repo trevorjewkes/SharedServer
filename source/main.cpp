@@ -3,16 +3,16 @@
  *in the library
  */
 
-#include "Lobby.hpp"
-#include "source/NetworkInterface/ServerNetworkInterface.hpp"
-#include "source/PlayerAPI/Player.hpp"
-#include <iostream>
-#include <sstream>
-#include <vector>
+#include<sstream>
+#include<iostream>
+#include<vector>
+#include"source/PlayerAPI/Player.hpp"
+#include"source/NetworkInterface/ServerNetworkInterface.hpp"
+#include"Lobby.hpp"
 
 Lobby lobby = Lobby();
 
-// void addPlayer(std::shared_ptr<Player> p) {
+//void addPlayer(std::shared_ptr<Player> p) {
 //  std::cout << "Player Added... " << *p << std::endl;
 //  knownPlayers.emplace_back(p);
 //  p->connection->write("Lobby Update");
@@ -27,13 +27,11 @@ Lobby lobby = Lobby();
 int main()
 {
   io_service service;
-  ServerNetworkInterface NI(
-    12000, service, std::cout, boost::bind(&Lobby::addPlayer, lobby, _1));
+  ServerNetworkInterface NI(12000, service, std::cout, boost::bind(&Lobby::addPlayer,lobby,_1));
   NI.startAccepting();
   std::string msg = "<NONE>";
-  while (msg != "EXIT")
-  {
-    // msg = NI.getMessages();
+  while (msg != "EXIT") {
+   // msg = NI.getMessages();
     std::cout << "Enter Server Command : " << std::endl;
     std::getline(std::cin, msg);
   }

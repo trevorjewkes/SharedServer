@@ -1,10 +1,7 @@
 xpGetExtern(externIncs externLibs PUBLIC boost)
 include_directories(${externIncs} ${CMAKE_SOURCE_DIR})
-add_library(Game
-Card.hpp
-Card.cpp
-Game.hpp
-Player.hpp
-Player.cpp
+add_library(AI
+AI.hpp
+AI.cpp
 )
-link_libraries(Game ${externLibs})
+link_libraries(AI ${externLibs})
